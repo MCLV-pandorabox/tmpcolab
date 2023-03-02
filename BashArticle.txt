@@ -1,0 +1,40 @@
+Intro to Bash Scripts
+
+The power of Bash does not lie in simply using the Bash Shell. It springs from the ability to use Bash to automate and perform actions described in a file. The scripts will look very similar to the commands you use in the shell- as writing them in a script will accomplish the same thing as writing them on the command line, but will allow you to execute them over and over again, in the same order. These scripts can also be shared around, and even ran by other programs!
+Creating the Script
+
+The first step is creating the actual file where we will write the script. Bash scripts use the .sh file type, as it is a “shell script” (Bash is actually an acronym for Bourne Again SHell, as it replaced the previous Bourne shell). To create it, just run touch first_bash.sh.
+
+We can then open this file in Vim and get to editing with vim first_bash.sh. If you don’t have vim, instructions on installation can be found here. Any file editor can be used, but I recommend vim as it will be easy to get to and from the command line, and vim has many features that make it more powerful than its lightweight design would make it seem.
+The Shebang
+
+The first line will be the shebang- which is instructions to the operating system telling it which interpreter to use to run the script. An interpreter is a program who’s job it is to execute commands from a higher level language, like Bash or Python, directly instead of having them compiled into machine code and then ran. The shebang takes the following form:
+#! interpreter [arguments]
+
+The interpreter is mandatory, but the arguments are optional. There are two methods to construct a shebang to use the Bash interpreter. The first is to use the absolute path to the bash interpreter:
+#!/bin/bash
+
+The other method is to use env to find the Bash interpreter from the user’s PATH. This will search the user’s PATH for the Bash interpreter. If there are several locations in the PATH for Bash’s location, the first will be used. This method is more flexible, as this will allow the script to be ran on any file system, and will not be dependent on the Bash interpreter being in a specific location. It will be the method we use:
+
+#!/usr/bin/env bash
+Hello World
+
+With the shebang in place, we are ready to write something that can be executed. We’ll start with a tried and true simple script: displaying Hello World. This requires only one line: echo “Hello World”. Your first_bash.sh should look like this:
+
+Run first_bash.sh and you should see “Hello World” echoed on the command line.
+Arguments and Parameters
+
+Now, how do you make your script interactive? While sometimes you want something ran the same way every time, there are many cases in which the script must do different things based on input. There are two ways to pass arguments into bash scripts. The first is the read command. This will stop the script and wait for user input. For example, we can write a simple script to add two numbers and output the sum.
+
+read is used to assign values to the first and second variables. The addition is performed through the expr command. If you are wondering what the dollar signs are, they are used for Command Substitution, which basically allows you to substitute the output of a command for a command in the script. writing first will simply represent the first variable, but writing ${first} will output the number stored in the first variable. Similarly, writing the expr line without the dollar sign and parenthesis would assign the expr command to the sum variable, instead of the sum of the two inputs. Let’s see this in action.
+
+The second, easier way to handle arguments is using positional parameters. These allow the arguments to be passed in when the script is ran on the command line. Each parameter will be referred to the order in which they are placed after the script name- the first will be $1, the second $2, the third $3, and so on ($0 is the name of the script). With this we can reconfigure our addition script.
+
+You’ll notice that this simplifies the script greatly, and still works great. It manages to get the same thing accomplished with many fewer lines, and the script does not have to stop to wait for user input.
+
+Positional parameters are usually preferred over using read to get information from the command prompt. It will make it easier to run the script, and will allow you to run scripts from other script, which amplifies your power when it comes to scripting. Positional parameters are an example of Special Parameters, a set of parameters that Bah reserves for special use.
+Other Articles in This Series on Bash
+
+    Bash Basics and Navigating Directory Trees
+    chmod and File Permissions
+    Special Parameters in Bash
